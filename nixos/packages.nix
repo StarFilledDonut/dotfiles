@@ -34,9 +34,8 @@ let
     blender-hip
     godot_4
     krita
-    # gsmartcontrol
     gnome-disk-utility
-    kdePackages.dolphin
+    nautilus
   ];
   desktop = with pkgs; [
     waybar
