@@ -25,6 +25,7 @@ let
     tty-clock
     radeontop
     smartmontools
+    appimage-run
   ];
   gui = with pkgs; [
     # zed-editor # It's good, just not neovim
@@ -36,6 +37,8 @@ let
     krita
     gnome-disk-utility
     nautilus
+    ventoy
+    stremio
   ];
   desktop = with pkgs; [
     waybar

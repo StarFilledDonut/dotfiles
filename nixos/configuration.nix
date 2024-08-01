@@ -7,16 +7,22 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+      useOSProber = true;
+      devices = [ "nodev" ];
+      catppuccin.enable = true;
+    };
+  };
   boot.initrd.kernelModules = [ "amdgpu" ];
 
   networking = {
     hostName = "nixos"; # Define your hostname.
     enableIPv6 = false;
-    # Enable networking
-    networkmanager.enable = true;
+    networkmanager.enable = true; # Enable network
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     # Configure network proxy if necessary
     # proxy.default = "http://user:password@proxy:port/";
@@ -29,12 +35,9 @@
     # firewall.enable = false;
   };
 
-  # Set your time zone.
   time.timeZone = "America/Maceio";
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
+  i18n.defaultLocale = "en_US.UTF-8"; # Internationalisation properties.
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pt_BR.UTF-8";
     LC_IDENTIFICATION = "pt_BR.UTF-8";
@@ -53,9 +56,9 @@
     pulseaudio.enable = false;
     bluetooth.enable = true;
     bluetooth.powerOnBoot = true;
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd ];
       extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
@@ -65,17 +68,7 @@
   services = {
     xserver = {
       enable = true;
-      layout = "br"; # Configure keymap in X11
-      xkbVariant = "";
-      displayManager = {
-        sddm = {
-          enable = true;
-          theme = "catppuccin-mocha";
-          wayland.enable = true;
-          package = pkgs.kdePackages.sddm;
-        };
-        defaultSession = "hyprland";
-      };
+      xkb.layout = "br"; # Configure keymap in X11
       # Enable touchpad support (enabled default in most desktopManager).
       # libinput.enable = true;
       desktopManager.retroarch = {
@@ -84,10 +77,18 @@
       };
       videoDrivers = [ "amdgpu" ];
     };
-    openssh = {
-      enable = true; # Enable the OpenSSH daemon.
-      passwordAuthentication = true;
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        package = pkgs.kdePackages.sddm;
+        catppuccin.enable = true;
+        catppuccin.background = "${./assets/catppuccin/nix-stripe-wallpaper.png}";
+      };
+      defaultSession = "hyprland";
     };
+    openssh.enable = true; # Enable the OpenSSH daemon.
+    openssh.settings.PasswordAuthentication = true;
     power-profiles-daemon.enable = true; # Power management
     udisks2.enable = true; # Auto mount removable meadia
     scrutiny.enable = true; # Enable drive monitoring
@@ -124,6 +125,7 @@
 
   # Configure console keymap
   console.keyMap = "br-abnt2";
+  console.catppuccin.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.star = {
@@ -142,13 +144,6 @@
       neovim
       kitty
       wl-clipboard
-      (catppuccin-sddm.override {
-        flavor = "mocha";
-        font = "Noto Sans";
-        fontSize = "9";
-        background = "${./assets/catppuccin/nix-stripe-wallpaper.png}";
-        loginBackground = true;
-      })
     ];
   };
 

@@ -34,7 +34,7 @@
     nixosConfigurations.star = nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit inputs outputs pkgs; };
-      modules = [ ./nixos/configuration.nix ];
+      modules = [ catppuccin.nixosModules.catppuccin ./nixos/configuration.nix ];
     };
     homeConfigurations.star = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
