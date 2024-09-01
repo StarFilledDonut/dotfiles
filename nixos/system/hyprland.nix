@@ -106,9 +106,10 @@
         "$mainMod, M, exec, $menu"
         "$mainMod, P, pseudo" # dwindle
         "$mainMod, R, togglesplit" # dwindle
-	", Print, exec, grim"
-	"$mainMod, Print, exec, grim -g \"$(slurp)\" - | magick - -shave 1x1 $HOME/Pictures/$(date '+%Y%m%d_%Hh%Mm%S').png"
-	"$mainMod, L, exec, hyprlock"
+        ", Print, exec, grim"
+        "$mainMod, Print, exec, grim -g \"$(slurp)\" - | magick - -shave 1x1 $HOME/Pictures/$(date '+%Y%m%d_%Hh%Mm%S').png"
+        "$mainMod, W, exec, wlogout"
+        "$mainMod, L, exec, hyprlock"
         # Move focus
         "Alt, H, movefocus, l"
         "Alt, L, movefocus, r"

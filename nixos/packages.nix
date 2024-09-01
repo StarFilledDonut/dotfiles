@@ -8,7 +8,6 @@ let
     gcc
     clang-tools
     gnumake
-    ncurses
   ];
   cli = with pkgs; [
     glow
@@ -18,6 +17,7 @@ let
     wget
     zip
     unzip
+    p7zip
     imagemagick
     cmatrix
     neo-cowsay
@@ -26,9 +26,12 @@ let
     radeontop
     smartmontools
     appimage-run
+    jmtpfs
+    xdotool
+    ffmpeg
+    distrobox
   ];
   gui = with pkgs; [
-    # zed-editor # It's good, just not neovim
     vesktop
     lutris
     pavucontrol
@@ -44,6 +47,7 @@ let
     waybar
     rofi-wayland
     wl-clipboard
+    wtype
     grim
     slurp
   ];

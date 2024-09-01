@@ -91,8 +91,14 @@
     openssh.settings.PasswordAuthentication = true;
     power-profiles-daemon.enable = true; # Power management
     udisks2.enable = true; # Auto mount removable meadia
+    gvfs.enable = true;
+    dbus.enable = true; # Inter Process Comunication between diferent processes
+    qemuGuest.enable = true;
+    spice-vdagentd.enable = true;
+    rkvm.enable = true;
     scrutiny.enable = true; # Enable drive monitoring
     blueman.enable = true;
+    snap.enable = true;
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -106,14 +112,30 @@
     };
   };
 
+  virtualisation = {
+    docker.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+
   programs = {
     hyprland = {
       enable = true;
       xwayland.enable = true;
     };
+    ydotool.enable = true;
     firefox.enable = true;
     steam.enable = true;
     fish.enable = true;
+    virt-manager.enable = true;
+    dconf.enable = true;
     # Some programs need SUID wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
@@ -131,19 +153,29 @@
   users.users.star = {
     isNormalUser = true;
     description = "star";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = [];
     shell = pkgs.fish;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") { inherit pkgs; };
+  };
+
   environment = {
     variables = { ROC_ENABLE_PRE_VEGA = "1"; };
     systemPackages = with pkgs; [
       neovim
       kitty
       wl-clipboard
+      virt-viewer
+      spice
+      spice-gtk
+      spice-protocol
+      win-virtio
+      win-spice
+      adwaita-icon-theme
     ];
   };
 

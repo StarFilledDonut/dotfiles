@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./kitty.nix
@@ -35,5 +37,7 @@
     yazi.enable = true;
     zathura.enable = true;
     cava.enable = true;
+    java.enable = true;
+    obs-studio.enable = true;
   };
 }

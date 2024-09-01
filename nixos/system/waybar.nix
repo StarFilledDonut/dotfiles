@@ -37,6 +37,7 @@
             "title<.*Popout>" = " ";
             "title<.*yazi.*>" = "󰝰 ";
             "title<.*git.*>" = "󰊤 ";
+            "title<RetroArch.*>" = "󰯉 ";
             "class<firefox>" = " ";
             "class<kitty>" = " ";
             "class<discord>" = " ";
